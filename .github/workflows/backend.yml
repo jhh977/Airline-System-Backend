@@ -11,5 +11,5 @@ jobs:
       uses: peter-evans/repository-dispatch@v1
       with:
         token: ${{ secrets.PAT }}
-        repository: jhh977/Travel-Agency
+        repository: jhh977/Airline-System
         event-type: update-submodules-event
