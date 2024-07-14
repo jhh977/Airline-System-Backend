@@ -14,12 +14,6 @@ class User
     private function connect()
     {
         $config = require __DIR__ . '/../../config/config.php';
-        //$mysqli = new \mysqli($config['servername'], $config['root'], $config[''], $config['travel_agency_db']);
-
-        //if ($mysqli->connect_error) {
-            //die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
-        //}
-
         return $mysqli;
     }
 

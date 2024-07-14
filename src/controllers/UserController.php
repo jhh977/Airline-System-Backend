@@ -57,8 +57,8 @@ class UserController
     {
         $data = json_decode(file_get_contents('php://input'), true);
 
-        $email = $data['email'] ?? '';
-        $password = $data['password'] ?? '';
+        $email = $data['email'] ;
+        $password = $data['password'] ;
 
         if (empty($email) || empty($password)) {
             http_response_code(400);
@@ -69,7 +69,6 @@ class UserController
         $user = $this->userModel->getUserByEmail($email);
 
         if ($user && password_verify($password, $user['password'])) {
-            // Assuming you are setting a session for the logged-in user
             session_start();
             $_SESSION['user_id'] = $user['id'];
             http_response_code(200);

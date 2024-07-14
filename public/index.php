@@ -21,19 +21,8 @@ $router->get('/test', function() {
     echo 'Test route is working!';
 });
 
-// Handle OPTIONS requests for CORS preflight
-$router->options('/{routes:.+}', function() {
-    // Just send a 200 response for OPTIONS requests
-    header('HTTP/1.1 200 OK');
-});
-
 // User routes
-$router->post('/api/register',  'App\Controllers\UserController@register'); // Correct
-/* 
-$router->get('/api/register', function() {
-    echo 'Test route is working!';
-}); // */
-
+$router->post('/api/register',  'App\Controllers\UserController@register'); 
 $router->post('/api/login', [UserController::class, 'login']);
 $router->put('/api/profile', [UserController::class, 'updateProfile']);
 $router->delete('/api/profile', [UserController::class, 'deleteUser']);
