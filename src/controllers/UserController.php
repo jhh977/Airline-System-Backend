@@ -46,6 +46,9 @@ class UserController
         if ($this->userModel->createUser($name, $email, $hashedPassword, $phoneNumber)) {
             http_response_code(201);
             echo json_encode(['message' => 'User registered successfully.']);
+            $res=$this->userModel->getUserByEmail($email);
+            session_start();
+            $_SESSION['loggedUserID']=$res['id'];
         } else {
             http_response_code(500);
             echo json_encode(['message' => 'Failed to register user.']);

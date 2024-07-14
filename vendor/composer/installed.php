@@ -3,7 +3,7 @@
         'name' => 'your-vendor/flight-management-system',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '1938915caeb38cb63cd0ea85ec81596304cf0a69',
+        'reference' => '1cbf01d7522114910f0f8a1f2acc2d375773d5a1',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -82,6 +82,15 @@
             'aliases' => array(),
             'dev_requirement' => true,
         ),
+        'openai-php/client' => array(
+            'pretty_version' => 'v0.10.1',
+            'version' => '0.10.1.0',
+            'reference' => '8b63d27a2f009a7ce4714fda77769e93d883c8da',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../openai-php/client',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'phar-io/manifest' => array(
             'pretty_version' => '2.0.4',
             'version' => '2.0.4.0',
@@ -99,6 +108,36 @@
             'install_path' => __DIR__ . '/../phar-io/version',
             'aliases' => array(),
             'dev_requirement' => true,
+        ),
+        'php-http/async-client-implementation' => array(
+            'dev_requirement' => false,
+            'provided' => array(
+                0 => '*',
+            ),
+        ),
+        'php-http/client-implementation' => array(
+            'dev_requirement' => false,
+            'provided' => array(
+                0 => '*',
+            ),
+        ),
+        'php-http/discovery' => array(
+            'pretty_version' => '1.19.4',
+            'version' => '1.19.4.0',
+            'reference' => '0700efda8d7526335132360167315fdab3aeb599',
+            'type' => 'composer-plugin',
+            'install_path' => __DIR__ . '/../php-http/discovery',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'php-http/multipart-stream-builder' => array(
+            'pretty_version' => '1.3.1',
+            'version' => '1.3.1.0',
+            'reference' => 'ed56da23b95949ae4747378bed8a5b61a2fdae24',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../php-http/multipart-stream-builder',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'phpoption/phpoption' => array(
             'pretty_version' => '1.9.2',
@@ -176,6 +215,7 @@
             'dev_requirement' => false,
             'provided' => array(
                 0 => '1.0',
+                1 => '*',
             ),
         ),
         'psr/http-factory' => array(
@@ -191,6 +231,7 @@
             'dev_requirement' => false,
             'provided' => array(
                 0 => '1.0',
+                1 => '*',
             ),
         ),
         'psr/http-message' => array(
@@ -206,6 +247,7 @@
             'dev_requirement' => false,
             'provided' => array(
                 0 => '1.0',
+                1 => '*',
             ),
         ),
         'ralouphie/getallheaders' => array(
@@ -418,7 +460,7 @@
         'your-vendor/flight-management-system' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '1938915caeb38cb63cd0ea85ec81596304cf0a69',
+            'reference' => '1cbf01d7522114910f0f8a1f2acc2d375773d5a1',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

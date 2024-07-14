@@ -57,4 +57,5 @@ class User
      * @param int $id
      * @return array|null
      */
+
 }

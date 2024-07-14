@@ -1,4 +1,5 @@
 <?php
+use App\Services\ChatBotService;
 
 // Server configuration for CORS security
 header("Access-Control-Allow-Origin: *");
@@ -78,5 +79,10 @@ $router->post('/api/admin/payments', [AdminController::class, 'createPayment']);
 // Trip planning route
 //$router->post('/api/trip-plan', [TripPlannerService::class, 'generateTripPlan']);
 
+//$router->post('/api/chat/response','App\Services\chatBotService@getBotResponse');
+//$router->post('/api/chat/history','App\Services\chatBotService@getChatHistory');
+//$router->post('/api/chat/response','App\Services\chatBotService@getBotResponse');
+$router->post('/api/chat/response','App\Services\ChatBotService@getBotResponse');
+$router->post('/api/chat/history','App\Services\ChatBotService@getChatHistory');
 // Handle requests
 $router->run();

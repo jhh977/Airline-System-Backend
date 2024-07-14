@@ -6,7 +6,8 @@
         "php": ">=7.4",
         "vlucas/phpdotenv": "^5.5",
         "bramus/router": "^1.6",
-        "guzzlehttp/guzzle": "*"
+        "guzzlehttp/guzzle": "*",
+        "openai-php/client": "*"
     },
     "autoload": {
         "psr-4": {
@@ -29,7 +30,10 @@
         "phpunit/phpunit": "^9.5"
     },
     "config": {
-        "optimize-autoloader": true
+        "optimize-autoloader": true,
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
     },
     "minimum-stability": "stable",
     "prefer-stable": true
