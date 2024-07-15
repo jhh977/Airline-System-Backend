@@ -86,4 +86,31 @@ class BookingController
             echo json_encode(['message' => 'Failed to delete booking.']);
         }
     }
+
+    public function getPendingBookingInformationByUserId()
+{
+    $data = json_decode(file_get_contents('php://input'), true);
+    $uID = $_POST['user_id'];
+
+    echo "user id received: ".$uID;
+
+    if (empty($uID)) {
+        http_response_code(400);
+        echo json_encode(['message' => 'user id not sent in post']);
+        return;
+    }
+    $bookingInfo = $this->bookingModel->getBookingInformationByUserId($uID);
+
+    if (is_array($bookingInfo)) {
+        http_response_code(200);
+        echo json_encode([
+            'message' => 'Booking retrieved successfully.',
+            'response' => $bookingInfo
+        ]);
+    } else {
+        http_response_code(500);
+        echo json_encode(['message' => 'Failed to retrieve booking information.']);
+    }
+}
+
 }

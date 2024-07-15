@@ -5,8 +5,8 @@ namespace App\Services;
 use App\Models\ChatBot;
 use Dotenv\Dotenv;
 
-$dotenv = Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+//$dotenv = Dotenv::createImmutable(__DIR__);
+//$dotenv->load();
 
 
 class ChatBotService
@@ -21,7 +21,8 @@ class ChatBotService
     {
         session_start();
         // Set your API key and the endpoint URL
-        $this->apiKey = $_ENV['OPENAI_API_KEY'];;
+        //$this->apiKey = $_ENV['OPENAI_API_KEY'];;
+        $this->apiKey="sk-proj-0Djm2a9NIn3PRMKOGNbhT3BlbkFJegBwXO4KS9iqAVVLm3SG";
         $this->endpoint = 'https://api.openai.com/v1/chat/completions';
         $this->model = 'gpt-3.5-turbo'; // specify the model
         $this->chatBotModel = new ChatBot();

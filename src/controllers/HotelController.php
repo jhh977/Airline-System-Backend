@@ -39,7 +39,7 @@ class HotelController
 
     public function getHotelByName() {
         $requestData = json_decode(file_get_contents('php://input'), true); 
-        $name = $_POST['name'];
+        $name = $requestData['name'];
         
         if (!isset($name)) {
             http_response_code(400);
