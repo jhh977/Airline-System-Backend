@@ -37,18 +37,28 @@ class HotelController
         }
     }
 
-    public function getHotelById($id)
-    {
-        $hotel = $this->hotelModel->getHotelById($id);
+    public function getHotelByName() {
+        $requestData = json_decode(file_get_contents('php://input'), true); 
+        $name = $_POST['name'];
+        
+        if (!isset($name)) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Name parameter is required']);
+            return;
+        }
+
+        $hotel = $this->hotelModel->getHotelByName($name);
 
         if ($hotel) {
             http_response_code(200);
+            header('Content-Type: application/json');
             echo json_encode($hotel);
         } else {
             http_response_code(404);
-            echo json_encode(['message' => 'Hotel not found.']);
+            echo json_encode(['message' => 'Hotel not found']);
         }
     }
+    
 
     public function updateHotel($id)
     {
