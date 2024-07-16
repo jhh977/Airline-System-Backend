@@ -24,15 +24,24 @@ class Taxi
         return $stmt->execute();
     }
 
-    public function getTaxiById($id)
+    public function getTaxiById($city)
     {
-        $stmt = $this->db->prepare("SELECT * FROM taxis WHERE id = ?");
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_assoc();
+        $stmt = $this->db->prepare("
+            SELECT * FROM taxis t
+            JOIN address a ON t.address_id = a.id
+            WHERE city = ?
+        ");
+        $stmt->bind_param("s", $city); 
+        $stmt->execute(); 
+        $result = $stmt->get_result(); 
+        // return $result->fetch_assoc();
+        $taxi = [];
+        while ($row = $result->fetch_assoc()) {
+            $taxi[] = $row;
+        }
+        
+        return $taxi;
     }
-
     public function updateTaxi($id, $licensePlate, $driverName, $driverPhoneNumber, $status)
     {
         $stmt = $this->db->prepare("UPDATE taxis SET license_plate = ?, driver_name = ?, driver_phone_number = ?, status = ? WHERE id = ?");

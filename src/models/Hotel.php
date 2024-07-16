@@ -25,22 +25,68 @@ class Hotel
         return $stmt->execute();
     }
 
-    public function getHotelByName($name) {
-        $stmt = $this->db->prepare("SELECT * FROM hotels WHERE name = ?");
-        $stmt->bind_param("s", $name);
+
+    // public function getHotelByName($name) {
+        // $stmt = $this->db->prepare("SELECT * FROM hotels WHERE name = ?");
+        // $stmt->bind_param("s", $name);
+        // $stmt->execute();
+        // $result = $stmt->get_result();
+        // return $result->fetch_assoc();
+
+        // $hotels=[];
+
+        // while ($row = $result->fetch_assoc()) {
+        //     $hotels[] = $row;
+
+        // }
+        // return $hotels;
+    // }
+    public function getHotelByName($city) {
+        $stmt = $this->db->prepare("
+            SELECT 
+                h.id AS hotel_id,
+                h.name AS hotel_name,
+                h.rating,
+                h.hotel_image_url,
+                a.city,
+                s.id AS service_id,
+                s.service_name AS service_name,
+                s.service_image
+            FROM hotels h
+            JOIN address a ON h.address_id = a.id
+            JOIN hotel_services hs ON h.id = hs.hotel_id
+            JOIN services s ON s.id = hs.service_id
+            WHERE a.city =?
+        ");
+        $stmt->bind_param("s", $city);
         $stmt->execute();
         $result = $stmt->get_result();
-
-        $hotels=[];
-
+    
+        $hotels = [];
+    
         while ($row = $result->fetch_assoc()) {
-            $hotels[] = $row;
-        
+            $hotel_id = $row['hotel_id'];
+    
+            if (!isset($hotels[$hotel_id])) {
+                $hotels[$hotel_id] = [
+                    'id' => $row['hotel_id'],
+                    'name' => $row['hotel_name'],
+                    'rating' => $row['rating'],
+                    'hotel_image_url' => $row['hotel_image_url'],
+                    'city' => $row['city'],
+                    'services' => []
+                ];
+            }
+    
+            $hotels[$hotel_id]['services'][] = [
+                'id' => $row['service_id'],
+                'name' => $row['service_name'],
+                'service_image' => $row['service_image']
+            ];
         }
+    
         return $hotels;
     }
-    
-
     public function updateHotel($id, $name, $location, $roomsAvailable, $pricePerNight)
     {
         $stmt = $this->db->prepare("UPDATE hotels SET name = ?, location = ?, rooms_available = ?, price_per_night = ? WHERE id = ?");

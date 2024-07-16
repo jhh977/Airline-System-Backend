@@ -37,19 +37,27 @@ class TaxiController
         }
     }
 
-    public function getTaxiById($id)
+    public function getTaxiByName()
     {
-        $taxi = $this->taxiModel->getTaxiById($id);
-
-        if ($taxi) {
-            http_response_code(200);
-            echo json_encode($taxi);
-        } else {
-            http_response_code(404);
-            echo json_encode(['message' => 'Taxi not found.']);
+        $requestCity=json_decode(file_get_contents('php://input'),true);
+        // $city=$_POST['name'];
+        $city=$requestCity['name'];
+        if(!isset($city)){
+            http_response_code(400);
+            echo json_encode(['error' => 'Name parameter is required']);
+            return;
         }
+        $taxi= $this->taxiModel->getTaxiById($city);
+    if ($taxi) {
+        http_response_code(200);
+        header('Content-Type: application/json');
+        echo json_encode($taxi);
+    } else {
+        http_response_code(404);
+        echo json_encode(['message' => 'Hotel not found.']);
+     
     }
-
+}
     public function updateTaxi($id)
     {
         $data = json_decode(file_get_contents('php://input'), true);
