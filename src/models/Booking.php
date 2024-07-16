@@ -97,4 +97,21 @@ class Booking
     return $result->fetch_assoc();
 }
 
+ /**
+     * save payment information after user checkout
+     *
+     * @param int $booking_id
+     * @param string $payment_date
+     * @param int $total_price
+     * @param string $payment_method
+     * @return array|null
+     */
+
+     public function storeBookingInformationInPayment($booking_id,$payment_date,$total_price,$paymnt_method){
+        //this should read booking_id, total_price from session
+        //after user presses on checkout button ==> fetch an API in bookingController that calls this method
+        $stmt = $this->db->prepare("INSERT INTO `payments`(`booking_id`, `payment_date`, `total_price`, `payment_method`) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("isis", $booking_id, $payment_date, $total_price, $paymnt_method);
+        return $stmt->execute();
+     }
 }

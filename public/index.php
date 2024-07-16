@@ -62,6 +62,7 @@ $router->delete('/api/taxis/{id}', [TaxiController::class, 'deleteTaxi']);
 
 // Booking routes
 $router->post('/api/bookings/details','App\Controllers\BookingController@getPendingBookingInformationByUserId');
+$router->post('/api/bookings/checkout','App\Controllers\BookingController@saveBookingInformationInPayment');
 $router->get('/api/bookings', [BookingController::class, 'getAllBookings']);
 $router->get('/api/bookings/{id}', [BookingController::class, 'getBookingById']);
 $router->put('/api/bookings/{id}', [BookingController::class, 'updateBooking']);

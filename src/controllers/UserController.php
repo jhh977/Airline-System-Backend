@@ -17,7 +17,7 @@ class UserController
     public function register()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-
+        $data = $_POST;
         $name = $data['name'] ;
         $email = $data['email'] ;
         $password = $data['password'] ;
@@ -49,6 +49,7 @@ class UserController
             $res=$this->userModel->getUserByEmail($email);
             session_start();
             $_SESSION['loggedUserID']=$res['id'];
+            echo json_encode(['session' => 'id saved in the session is :'.$_SESSION['loggedUserID']]);
         } else {
             http_response_code(500);
             echo json_encode(['message' => 'Failed to register user.']);
@@ -73,7 +74,7 @@ class UserController
 
         if ($user && password_verify($password, $user['password'])) {
             session_start();
-            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['loggedUserID'] = $user['id'];
             http_response_code(200);
             echo json_encode(['message' => 'Login successful.']);
         } else {

@@ -88,29 +88,50 @@ class BookingController
     }
 
     public function getPendingBookingInformationByUserId()
-{
-    $data = json_decode(file_get_contents('php://input'), true);
-    $uID = $_POST['user_id'];
+    {
+        //$data = json_decode(file_get_contents('php://input'), true);
+        session_start();
+        $uID = $_SESSION['loggedUserID'];
 
-    echo "user id received: ".$uID;
+        echo "user id received: ".$uID.PHP_EOL;
 
-    if (empty($uID)) {
-        http_response_code(400);
-        echo json_encode(['message' => 'user id not sent in post']);
-        return;
+        if (empty($uID)) {
+            http_response_code(400);
+            echo json_encode(['message' => 'user id not received from session']);
+            return;
+        }
+        $bookingInfo = $this->bookingModel->getBookingInformationByUserId($uID);
+
+        if (is_array($bookingInfo)) {
+            http_response_code(200);
+            $total_price = $bookingInfo['hotel_booking_price']+$bookingInfo['taxi_booking_price']+$bookingInfo['flight_price'];
+            
+            $_SESSION['total_pice']=$total_price;               // to be used in the payment checkout method
+            $_SESSION['booking_id']=$bookingInfo['booking_id']; // to be used in the payment checkout method
+            echo json_encode([
+                'message' => 'Booking retrieved successfully.',
+                'response' => $bookingInfo,
+                'total_price' =>$_SESSION['total_pice'],
+            ]);
+        } else {
+            http_response_code(500);
+            echo json_encode(['message' => 'This user has no booking information']);
+        }
     }
-    $bookingInfo = $this->bookingModel->getBookingInformationByUserId($uID);
 
-    if (is_array($bookingInfo)) {
-        http_response_code(200);
-        echo json_encode([
-            'message' => 'Booking retrieved successfully.',
-            'response' => $bookingInfo
-        ]);
-    } else {
-        http_response_code(500);
-        echo json_encode(['message' => 'Failed to retrieve booking information.']);
+    public function saveBookingInformationInPayment()
+    {
+        session_start();
+        $booking_id = $_SESSION['booking_id'];
+        $total_price =  $_SESSION['total_pice'];
+        $payment_method = 'credit card';
+        $payment_date=date("Y-m-d");;
+        if ($this->bookingModel->storeBookingInformationInPayment($booking_id,$payment_date,$total_price, $payment_method )) {
+            http_response_code(201);
+            echo json_encode(['message' => 'User paid, all saved in payment table now']);
+        } else {
+            http_response_code(500);
+            echo json_encode(['message' => 'Failed to pay, try again']);
+        }
     }
-}
-
 }
