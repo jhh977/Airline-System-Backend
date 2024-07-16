@@ -89,12 +89,13 @@ class BookingController
 
     public function getPendingBookingInformationByUserId()
     {
+        
         //$data = json_decode(file_get_contents('php://input'), true);
         session_start();
-        $uID = $_SESSION['loggedUserID'];
+        //$uID = $_SESSION['loggedUserID'];
 
-        echo "user id received: ".$uID.PHP_EOL;
-
+        //echo "user id received: ".$uID.PHP_EOL;
+        $uID=11;
         if (empty($uID)) {
             http_response_code(400);
             echo json_encode(['message' => 'user id not received from session']);
@@ -108,10 +109,11 @@ class BookingController
             
             $_SESSION['total_pice']=$total_price;               // to be used in the payment checkout method
             $_SESSION['booking_id']=$bookingInfo['booking_id']; // to be used in the payment checkout method
+            header('Content-Type: application/json');
             echo json_encode([
-                'message' => 'Booking retrieved successfully.',
+                //'message' => 'Booking retrieved successfully.',
                 'response' => $bookingInfo,
-                'total_price' =>$_SESSION['total_pice'],
+                //'total_price' =>$_SESSION['total_pice'],
             ]);
         } else {
             http_response_code(500);
