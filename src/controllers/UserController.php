@@ -60,7 +60,7 @@ class UserController
     public function login()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        //$data = $_POST;
+        $data = $_POST;
         $email = $data['email'] ;
         $password = $data['password'] ;
 

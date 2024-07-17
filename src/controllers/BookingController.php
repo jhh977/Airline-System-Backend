@@ -97,12 +97,13 @@ class BookingController
     public function getPendingBookingInformationByUserId()
     {
         
-        //$data = json_decode(file_get_contents('php://input'), true);
         session_start();
-        //$uID = $_SESSION['loggedUserID'];
+        //echo "hello";
+        //$data = json_decode(file_get_contents('php://input'), true);
+        $uID = $_SESSION['loggedUserID'];
 
         //echo "user id received: ".$uID.PHP_EOL;
-        $uID=11;
+        //$uID=2;
         if (empty($uID)) {
             http_response_code(400);
             echo json_encode(['message' => 'user id not received from session']);
@@ -112,7 +113,7 @@ class BookingController
 
         if (is_array($bookingInfo)) {
             http_response_code(200);
-            $total_price = $bookingInfo['hotel_booking_price']+$bookingInfo['taxi_booking_price']+$bookingInfo['flight_price'];
+            $total_price = $bookingInfo['hotel_booking_price']+$bookingInfo['taxi_booking_price']+$bookingInfo['flight_booking_price'];
             
             $_SESSION['total_pice']=$total_price;               // to be used in the payment checkout method
             $_SESSION['booking_id']=$bookingInfo['booking_id']; // to be used in the payment checkout method
@@ -120,7 +121,7 @@ class BookingController
             echo json_encode([
                 //'message' => 'Booking retrieved successfully.',
                 'response' => $bookingInfo,
-                //'total_price' =>$_SESSION['total_pice'],
+                'total_price' =>$_SESSION['total_pice'],
             ]);
         } else {
             http_response_code(500);
@@ -130,20 +131,21 @@ class BookingController
 
     public function saveBookingInformationInPayment()
     {
+        $data = json_decode(file_get_contents('php://input'), true);
         //save booking information in payment table
         session_start();
-        //$booking_id = $_SESSION['booking_id']; 
-        $booking_id = 1; $total_price=400;
-        //$total_price =  $_SESSION['total_pice'];
+        $booking_id = $_SESSION['booking_id']; 
+        $total_price =  $_SESSION['total_pice'];
+        $userEmail = $_SESSION['loggedUserEmail'];
+
         $payment_method = 'credit card';
         $payment_date=date("Y-m-d");
-        //$userEmail = $_SESSION['loggedUserEmail'];
-        $userEmail = "52130448@students.liu.edu.lb";
+        //$userEmail = "52130448@students.liu.edu.lb";
         if ($this->bookingModel->storeBookingInformationInPayment($booking_id,$payment_date,$total_price, $payment_method )) {
             echo json_encode(['message' => 'User paid, all saved in payment table now']);
             //if saved, send an email to the user using PHPMailer
             $subject  = "Payment Details";
-            $body ="Thanks for comfirming your booking! .$total_price. has been deducted from you ";
+            $body ="Thanks for comfirming your booking! $$total_price has been deducted from you ";
             http_response_code(201);
             if($this->mailer->sendMail($userEmail,$subject,$body)){
                 echo json_encode(['email_status' => 'user received an email on payment']);
