@@ -60,7 +60,7 @@ class UserController
     public function login()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        
+        //$data = $_POST;
         $email = $data['email'] ;
         $password = $data['password'] ;
 
@@ -76,7 +76,10 @@ class UserController
             session_start();
             $_SESSION['loggedUserID'] = $user['id'];
             http_response_code(200);
-            echo json_encode(['message' => 'Login successful.']);
+            echo json_encode([
+                'message' => 'Login successful.',
+                'userID' => $_SESSION['loggedUserID']
+            ]);            
         } else {
             http_response_code(401);
             echo json_encode(['message' => 'Invalid email or password.']);

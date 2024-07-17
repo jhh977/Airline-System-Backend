@@ -51,11 +51,5 @@ class User
         return $result->fetch_assoc();
     }
 
-    /**
-     * Get a user by ID
-     *
-     * @param int $id
-     * @return array|null
-     */
 
 }

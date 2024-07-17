@@ -33,7 +33,7 @@ $router->get('/test', function() {
 
 // User routes
 $router->post('/api/register',  'App\Controllers\UserController@register'); 
-$router->post('/api/login', [UserController::class, 'login']);
+$router->post('/api/login', 'App\Controllers\UserController@login');
 $router->put('/api/profile', [UserController::class, 'updateProfile']);
 $router->delete('/api/profile', [UserController::class, 'deleteUser']);
 
