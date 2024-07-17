@@ -24,6 +24,7 @@ return array(
     'Dotenv\\' => array($vendorDir . '/vlucas/phpdotenv/src'),
     'Doctrine\\Instantiator\\' => array($vendorDir . '/doctrine/instantiator/src/Doctrine/Instantiator'),
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
+    'App\\Utils\\' => array($baseDir . '/src/utils'),
     'App\\Tests\\' => array($baseDir . '/tests'),
     'App\\Services\\' => array($baseDir . '/src/services'),
     'App\\Models\\' => array($baseDir . '/src/models'),

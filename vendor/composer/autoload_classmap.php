@@ -21,6 +21,7 @@ return array(
     'App\\Models\\Payment' => $baseDir . '/src/models/Payment.php',
     'App\\Models\\Taxi' => $baseDir . '/src/models/Taxi.php',
     'App\\Models\\User' => $baseDir . '/src/models/User.php',
+    'App\\utils\\SendEmail' => $baseDir . '/src/utils/SendEmail.php',
     'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
     'Bramus\\Router\\Router' => $vendorDir . '/bramus/router/src/Bramus/Router/Router.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',

@@ -3,7 +3,7 @@
         'name' => 'your-vendor/flight-management-system',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '59b1b4ea7b95844974ef0df716dcb102194e0b70',
+        'reference' => 'd35c9ad8d17db4ca3e11fb56eb7004d21810e60e',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -469,7 +469,7 @@
         'your-vendor/flight-management-system' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '59b1b4ea7b95844974ef0df716dcb102194e0b70',
+            'reference' => 'd35c9ad8d17db4ca3e11fb56eb7004d21810e60e',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

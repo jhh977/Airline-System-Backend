@@ -57,6 +57,7 @@ class ComposerStaticInit4a058e39aa349557b55666c012b284a9
         ),
         'A' => 
         array (
+            'App\\Utils\\' => 10,
             'App\\Tests\\' => 10,
             'App\\Services\\' => 13,
             'App\\Models\\' => 11,
@@ -138,6 +139,10 @@ class ComposerStaticInit4a058e39aa349557b55666c012b284a9
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
         ),
+        'App\\Utils\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/utils',
+        ),
         'App\\Tests\\' => 
         array (
             0 => __DIR__ . '/../..' . '/tests',
@@ -182,6 +187,7 @@ class ComposerStaticInit4a058e39aa349557b55666c012b284a9
         'App\\Models\\Payment' => __DIR__ . '/../..' . '/src/models/Payment.php',
         'App\\Models\\Taxi' => __DIR__ . '/../..' . '/src/models/Taxi.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/src/models/User.php',
+        'App\\utils\\SendEmail' => __DIR__ . '/../..' . '/src/utils/SendEmail.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Bramus\\Router\\Router' => __DIR__ . '/..' . '/bramus/router/src/Bramus/Router/Router.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
