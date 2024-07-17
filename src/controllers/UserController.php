@@ -60,6 +60,7 @@ class UserController
     {
         $data = json_decode(file_get_contents('php://input'), true);
 
+        //$data=$_POST;
         $email = $data['email'] ;
         $password = $data['password'] ;
 
@@ -71,14 +72,17 @@ class UserController
 
         $user = $this->userModel->getUserByEmail($email);
 
-        if ($user && password_verify($password, $user['password'])) {
-            session_start();
-            $_SESSION['user_id'] = $user['id'];
-            http_response_code(200);
-            echo json_encode(['message' => 'Login successful.']);
-        } else {
-            http_response_code(401);
-            echo json_encode(['message' => 'Invalid email or password.']);
+        if ($user) {
+            if (password_verify($password, $user['password'])) {
+                session_start();
+                $_SESSION['user_id'] = $user['id'];
+                http_response_code(200);
+                echo json_encode(['message' => 'Login successful.']);
+            } else {
+                http_response_code(401);
+                echo json_encode(['message' => 'Invalid email or password.']);
+            }
         }
+        
     }
 }

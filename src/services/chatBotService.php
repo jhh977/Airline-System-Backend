@@ -3,10 +3,10 @@
 namespace App\Services;
 
 use App\Models\ChatBot;
-use Dotenv\Dotenv;
+//use Dotenv\Dotenv;
 
-$dotenv = Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+//$dotenv = Dotenv::createImmutable(__DIR__);
+//$dotenv->load();
 
 
 class ChatBotService
@@ -20,10 +20,10 @@ class ChatBotService
     public function __construct()
     {
         session_start();
-        // Set your API key and the endpoint URL
-        $this->apiKey = $_ENV['OPENAI_API_KEY'];;
+        //$this->apiKey = $_ENV['OPENAI_API_KEY'];;
+        $this->apiKey="sk-proj-Aipe7uZ3TkOh1sVA72IqT3BlbkFJA5f1uFownfs7cO1SxM0G";
         $this->endpoint = 'https://api.openai.com/v1/chat/completions';
-        $this->model = 'gpt-3.5-turbo'; // specify the model
+        $this->model = 'gpt-3.5-turbo'; 
         $this->chatBotModel = new ChatBot();
 
         // Set the headers
@@ -34,11 +34,11 @@ class ChatBotService
     }
 
     public function getBotResponse() {
-        header('Content-Type: application/json');  // Set the response content type to JSON
+        header('Content-Type: application/json');  
     
         // Retrieve and decode the JSON request body
         $userData = json_decode(file_get_contents('php://input'), true);
-    
+        //$userData=$_POST;
         //$userData['content']='hello';
         // Check if the message is provided in the request
         if (!isset($userData['msg'])) {
@@ -97,7 +97,7 @@ class ChatBotService
     
             // Attempt to store the chat history in the database
             //if ($this->chatBotModel->storeChatInDb($_SESSION['loggedUserID'], $msg, $reply)) {
-            if ($this->chatBotModel->storeChatInDb('3', $msg, $reply)) {
+            if ($this->chatBotModel->storeChatInDb('1', $msg, $reply)) {
                 // Return the bot response as JSON
                 echo json_encode(['response' => $reply]);
             } else {
@@ -111,12 +111,7 @@ class ChatBotService
     }     
 
     public function getChatHistory(){
-        // Set the Content-Type header to application/json
-        header('Content-Type: application/json');
-        
-        // Check if the user has chat history
-        //$chatHistory = $this->chatBotModel->loadChat($_SESSION['loggedUserID']);
-        $chatHistory = $this->chatBotModel->loadChat('3');
+        $chatHistory = $this->chatBotModel->loadChat('1');
         if ($chatHistory) {
             // Return the chat history as JSON
             echo json_encode($chatHistory);

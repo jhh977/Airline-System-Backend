@@ -33,7 +33,8 @@ $router->get('/test', function() {
 
 // User routes
 $router->post('/api/register',  'App\Controllers\UserController@register'); 
-$router->post('/api/login', [UserController::class, 'login']);
+$router->post('/api/login','App\Controllers\UserController@login');
+//$router->post('/api/login', [UserController::class, 'login']);
 $router->put('/api/profile', [UserController::class, 'updateProfile']);
 $router->delete('/api/profile', [UserController::class, 'deleteUser']);
 
@@ -82,7 +83,7 @@ $router->post('/api/admin/bookings', [AdminController::class, 'createBooking']);
 $router->post('/api/admin/payments', [AdminController::class, 'createPayment']);
 
 // Trip planning route
-$router->post('/api/trip-plan', [TripPlannerService::class, 'generateTripPlan']);
+//$router->post('/api/trip-plan', [TripPlannerService::class, 'generateTripPlan']);
 
 //$router->post('/api/chat/response','App\Services\chatBotService@getBotResponse');
 //$router->post('/api/chat/history','App\Services\chatBotService@getChatHistory');
