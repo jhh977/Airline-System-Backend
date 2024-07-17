@@ -4,9 +4,46 @@ namespace App\Controllers;
 
 use App\Models\Booking;
 
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
+
+require "../utils/SendEmail.php";
+
 class BookingController
 {
     private $bookingModel;
+
+    public function sendEmail($to, $subject, $body) {
+        $mail = new PHPMailer(true); // Passing true enables exceptions
+        try {
+            // SMTP configuration
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'majdbitar2003@gmail.com'; // Your Gmail email address
+            $mail->Password = 'ucny xhuw fgfy dvog'; // Your Gmail password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 587;
+            
+            // Debug output
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER; // Enable verbose debug output
+            $mail->Debugoutput = 'html';
+    
+            // Email content
+            $mail->setFrom('majdbitar2003@gmail.com', 'Majd'); // Your name and email address
+            $mail->addAddress($to); // Recipient email address
+            $mail->Subject = $subject;
+            $mail->Body = $body;
+    
+            // Send email
+            $mail->send();
+            return true; // Email sent successfully
+        } catch (Exception $e) {
+            return $e->getMessage(); // Return error message
+        }
+    }
 
     public function __construct()
     {
@@ -123,14 +160,25 @@ class BookingController
 
     public function saveBookingInformationInPayment()
     {
+        //save booking information in payment table
         session_start();
         $booking_id = $_SESSION['booking_id'];
         $total_price =  $_SESSION['total_pice'];
         $payment_method = 'credit card';
-        $payment_date=date("Y-m-d");;
+        $payment_date=date("Y-m-d");
+        $userEmail = $_SESSION['loggedUserEmail'];
         if ($this->bookingModel->storeBookingInformationInPayment($booking_id,$payment_date,$total_price, $payment_method )) {
-            http_response_code(201);
             echo json_encode(['message' => 'User paid, all saved in payment table now']);
+            //if saved, send an email to the user using PHPMailer
+            $subject  = "Payment Details";
+            $body ="Thanks for comfirming your booking! .$total_price. has been deducted from you ";
+            http_response_code(201);
+            if(sendEmail($userEmail,$subject,$body)){
+                echo json_encode(['email_status' => 'user received an email on payment']);
+            }else{
+                echo json_encode(['email_status' => 'user did not received an email on payment']);
+            }
+            
         } else {
             http_response_code(500);
             echo json_encode(['message' => 'Failed to pay, try again']);

@@ -31,6 +31,7 @@ class ComposerStaticInit4a058e39aa349557b55666c012b284a9
             'Psr\\Http\\Client\\' => 16,
             'PhpParser\\' => 10,
             'PhpOption\\' => 10,
+            'PHPMailer\\PHPMailer\\' => 20,
         ),
         'O' => 
         array (
@@ -92,6 +93,10 @@ class ComposerStaticInit4a058e39aa349557b55666c012b284a9
         'PhpOption\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
+        ),
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
         'OpenAI\\' => 
         array (
@@ -171,6 +176,7 @@ class ComposerStaticInit4a058e39aa349557b55666c012b284a9
         'App\\Controllers\\UserController' => __DIR__ . '/../..' . '/src/controllers/UserController.php',
         'App\\Models\\Admin' => __DIR__ . '/../..' . '/src/models/Admin.php',
         'App\\Models\\Booking' => __DIR__ . '/../..' . '/src/models/Booking.php',
+        'App\\Models\\ChatBot' => __DIR__ . '/../..' . '/src/models/ChatBot.php',
         'App\\Models\\Flight' => __DIR__ . '/../..' . '/src/models/Flight.php',
         'App\\Models\\Hotel' => __DIR__ . '/../..' . '/src/models/Hotel.php',
         'App\\Models\\Payment' => __DIR__ . '/../..' . '/src/models/Payment.php',
@@ -654,6 +660,13 @@ class ComposerStaticInit4a058e39aa349557b55666c012b284a9
         'OpenAI\\ValueObjects\\Transporter\\Payload' => __DIR__ . '/..' . '/openai-php/client/src/ValueObjects/Transporter/Payload.php',
         'OpenAI\\ValueObjects\\Transporter\\QueryParams' => __DIR__ . '/..' . '/openai-php/client/src/ValueObjects/Transporter/QueryParams.php',
         'OpenAI\\ValueObjects\\Transporter\\Response' => __DIR__ . '/..' . '/openai-php/client/src/ValueObjects/Transporter/Response.php',
+        'PHPMailer\\PHPMailer\\DSNConfigurator' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/DSNConfigurator.php',
+        'PHPMailer\\PHPMailer\\Exception' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/Exception.php',
+        'PHPMailer\\PHPMailer\\OAuth' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/OAuth.php',
+        'PHPMailer\\PHPMailer\\OAuthTokenProvider' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/OAuthTokenProvider.php',
+        'PHPMailer\\PHPMailer\\PHPMailer' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/PHPMailer.php',
+        'PHPMailer\\PHPMailer\\POP3' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/POP3.php',
+        'PHPMailer\\PHPMailer\\SMTP' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/SMTP.php',
         'PHPUnit\\Exception' => __DIR__ . '/..' . '/phpunit/phpunit/src/Exception.php',
         'PHPUnit\\Framework\\ActualValueIsNotAnObjectException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Exception/ActualValueIsNotAnObjectException.php',
         'PHPUnit\\Framework\\Assert' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert.php',

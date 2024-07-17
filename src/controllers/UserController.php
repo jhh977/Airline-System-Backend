@@ -75,6 +75,7 @@ class UserController
         if ($user && password_verify($password, $user['password'])) {
             session_start();
             $_SESSION['loggedUserID'] = $user['id'];
+            $_SESSION['loggedUserEmail']= $user['email']; //to be used later in payment
             http_response_code(200);
             echo json_encode([
                 'message' => 'Login successful.',
