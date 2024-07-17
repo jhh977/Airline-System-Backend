@@ -97,7 +97,7 @@ class ChatBotService
     
             // Attempt to store the chat history in the database
             //if ($this->chatBotModel->storeChatInDb($_SESSION['loggedUserID'], $msg, $reply)) {
-            if ($this->chatBotModel->storeChatInDb('1', $msg, $reply)) {
+            if ($this->chatBotModel->storeChatInDb($_SESSION['loggedUserID'], $msg, $reply)) {
                 // Return the bot response as JSON
                 echo json_encode(['response' => $reply]);
             } else {
@@ -111,7 +111,7 @@ class ChatBotService
     }     
 
     public function getChatHistory(){
-        $chatHistory = $this->chatBotModel->loadChat('1');
+        $chatHistory = $this->chatBotModel->loadChat($_SESSION['loggedUserID']);
         if ($chatHistory) {
             // Return the chat history as JSON
             echo json_encode($chatHistory);
