@@ -39,15 +39,17 @@ class HotelController
 
     public function getHotelByName() {
         $requestData = json_decode(file_get_contents('php://input'), true); 
-        $name = $_POST['name'];
-        
+        // $name = $_POST['name'];
+        $name = $requestData['name'];
         if (!isset($name)) {
             http_response_code(400);
             echo json_encode(['error' => 'Name parameter is required']);
             return;
         }
+        
 
         $hotel = $this->hotelModel->getHotelByName($name);
+        // hotelModel->getHotelByName($name);
 
         if ($hotel) {
             http_response_code(200);
@@ -55,6 +57,7 @@ class HotelController
             echo json_encode($hotel);
         } else {
             http_response_code(404);
+            echo json_encode(['message' => 'Hotel not found.']);
             echo json_encode(['message' => 'Hotel not found']);
         }
     }

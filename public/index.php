@@ -54,10 +54,10 @@ $router->delete('/api/hotels/{id}', [HotelController::class, 'deleteHotel']);
 
 
 // Taxi routes
-$router->post('/api/taxis', [TaxiController::class, 'createTaxi']);
-$router->get('/api/taxis', [TaxiController::class, 'getAllTaxis']);
+$router->post('/api/taxis', 'App\Controllers\TaxiController@getTaxiByName');
+$router->get('/api/taxis', "App\Controllers\TaxiController@getTaxiByName");
 $router->get('/api/taxis/{id}', [TaxiController::class, 'getTaxiById']);
-$router->put('/api/taxis/{id}', [TaxiController::class, 'updateTaxi']);
+$router->put('/api/taxis/{id}', [TaxiController::class, 'updateTaxi']); 
 $router->delete('/api/taxis/{id}', [TaxiController::class, 'deleteTaxi']);
 
 // Booking routes
