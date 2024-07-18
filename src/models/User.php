@@ -19,7 +19,6 @@ class User
 
     /**
      * Create a new user
-     *
      * @param string $name
      * @param string $email
      * @param string $password
@@ -38,7 +37,6 @@ class User
 
     /**
      * Get a user by email
-     *
      * @param string $email
      * @return array|null
      */

@@ -17,32 +17,50 @@ class Booking
         return $mysqli;
     }
 
-    public function getBookingById($id)
-    {
-        $stmt = $this->db->prepare("SELECT * FROM bookings WHERE id = ?");
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_assoc();
+    /**
+         * save payment information after user checkout
+         * @param int $booking_id
+         * @param string $payment_date
+         * @param int $total_price
+         * @param string $payment_method
+         * @return array|null
+         */
+
+        public function storeBookingInformationInPayment($booking_id,$payment_date,$total_price,$paymnt_method){
+            //this should read booking_id, total_price from session
+            //after user presses on checkout button ==> fetch an API in bookingController that calls this method
+            $stmt = $this->db->prepare("INSERT INTO `payments`(`booking_id`, `payment_date`, `total_price`, `payment_method`) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("isis", $booking_id, $payment_date, $total_price, $paymnt_method);
+            return $stmt->execute();
+        }
+
+
+        /**
+     * @param int $flight_id
+     * @param int $user_id
+     * @param int $hotel_booking_id
+     * @param int $taxi_booking_id
+     * @param string $booking_date
+     * @param int $total_price
+     * @param string $status
+     * @return int|bool
+     */
+    public function createBooking($flight_id, $user_id, $hotel_booking_id, $taxi_booking_id, $booking_date, $total_price, $status) {
+        $stmt = $this->db->prepare("INSERT INTO `booking` (`flight_id`, `user_id`, `hotel_id`, `taxi_id`, `booking_date`, `total_price`, `status`)
+        VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("iiiiiss", $flight_id, $user_id, $hotel_booking_id, $taxi_booking_id, $booking_date, $total_price, $status);
+
+        // Execute the statement
+        if ($stmt->execute()) {
+            return $this->db->insert_id; // Return the ID of the inserted record
+        } else {
+            return false; // Handle the error case
+        }
     }
 
-    public function updateBooking($id, $userId, $flightId, $hotelId, $taxiId, $status)
-    {
-        $stmt = $this->db->prepare("UPDATE bookings SET user_id = ?, flight_id = ?, hotel_id = ?, taxi_id = ?, status = ? WHERE id = ?");
-        $stmt->bind_param("iiissi", $userId, $flightId, $hotelId, $taxiId, $status, $id);
-        return $stmt->execute();
-    }
-
-    public function deleteBooking($id)
-    {
-        $stmt = $this->db->prepare("DELETE FROM bookings WHERE id = ?");
-        $stmt->bind_param("i", $id);
-        return $stmt->execute();
-    }
 
     /**
      * get all information about a pending booking for the checkout page
-     *
      * @param int $user_id
      * @return array|null
      */
@@ -90,45 +108,6 @@ class Booking
     return $result->fetch_assoc();
 }
 
- /**
-     * save payment information after user checkout
-     *
-     * @param int $booking_id
-     * @param string $payment_date
-     * @param int $total_price
-     * @param string $payment_method
-     * @return array|null
-     */
-
-     public function storeBookingInformationInPayment($booking_id,$payment_date,$total_price,$paymnt_method){
-        //this should read booking_id, total_price from session
-        //after user presses on checkout button ==> fetch an API in bookingController that calls this method
-        $stmt = $this->db->prepare("INSERT INTO `payments`(`booking_id`, `payment_date`, `total_price`, `payment_method`) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("isis", $booking_id, $payment_date, $total_price, $paymnt_method);
-        return $stmt->execute();
-     }
-
-     /**
- * @param int $flight_id
- * @param int $user_id
- * @param int $hotel_booking_id
- * @param int $taxi_booking_id
- * @param string $booking_date
- * @param int $total_price
- * @param string $status
- * @return int|bool
- */
-public function createBooking($flight_id, $user_id, $hotel_booking_id, $taxi_booking_id, $booking_date, $total_price, $status) {
-    $stmt = $this->db->prepare("INSERT INTO `booking` (`flight_id`, `user_id`, `hotel_id`, `taxi_id`, `booking_date`, `total_price`, `status`)
-     VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("iiiiiss", $flight_id, $user_id, $hotel_booking_id, $taxi_booking_id, $booking_date, $total_price, $status);
-
-    // Execute the statement
-    if ($stmt->execute()) {
-        return $this->db->insert_id; // Return the ID of the inserted record
-    } else {
-        return false; // Handle the error case
-    }
-}
+ 
 
 }

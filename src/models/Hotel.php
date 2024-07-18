@@ -17,31 +17,40 @@ class Hotel
         return $mysqli;
     }
     
+    /**
+         * @param int $hotel_id
+         * @param string $checkin_date
+         * @param string $checkout_date
+         * @param string $room_type
+         * @param int $num_guests
+         * @param int $price
+         * @return int|bool
+     */
+    public function createHotelBooking($hotel_id, $checkin_date, $checkout_date, $room_type, $num_guests, $price) {
+        $stmt = $this->db->prepare("INSERT INTO `hotel_booking` (`hotel_id`, `checkin_date`, `checkout_date`, `room_type`, `num_guests`, `price`)
+        VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("isssii", $hotel_id, $checkin_date, $checkout_date, $room_type, $num_guests, $price);
 
-    public function createHotel($name, $location, $roomsAvailable, $pricePerNight)
-    {
-        $stmt = $this->db->prepare("INSERT INTO hotels (name, location, rooms_available, price_per_night) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssii", $name, $location, $roomsAvailable, $pricePerNight);
-        return $stmt->execute();
+        if ($stmt->execute()) {
+            return $this->db->insert_id; // Return the ID of the inserted record
+        } else {
+            return false;
+        }
     }
 
 
-    // public function getHotelByName($name) {
-        // $stmt = $this->db->prepare("SELECT * FROM hotels WHERE name = ?");
-        // $stmt->bind_param("s", $name);
-        // $stmt->execute();
-        // $result = $stmt->get_result();
-        // return $result->fetch_assoc();
 
-        // $hotels=[];
-
-        // while ($row = $result->fetch_assoc()) {
-        //     $hotels[] = $row;
-
-        // }
-        // return $hotels;
-    // }
-    public function getHotelByName($city) {
+    /**
+        * filters hotel based on location
+        * @param int $hotel_id
+        * @param string $checkin_date
+        * @param string $checkout_date
+        * @param string $room_type
+        * @param int $num_guests
+        * @param int $price
+        * @return int|bool
+     */
+    public function getHotelByLocation($city) {
         $stmt = $this->db->prepare("
             SELECT 
                 h.id AS hotel_id,
@@ -87,39 +96,7 @@ class Hotel
     
         return $hotels;
     }
-    public function updateHotel($id, $name, $location, $roomsAvailable, $pricePerNight)
-    {
-        $stmt = $this->db->prepare("UPDATE hotels SET name = ?, location = ?, rooms_available = ?, price_per_night = ? WHERE id = ?");
-        $stmt->bind_param("ssiii", $name, $location, $roomsAvailable, $pricePerNight, $id);
-        return $stmt->execute();
-    }
 
-    public function deleteHotel($id)
-    {
-        $stmt = $this->db->prepare("DELETE FROM hotels WHERE id = ?");
-        $stmt->bind_param("i", $id);
-        return $stmt->execute();
-    }
 
-    /**
- * @param int $hotel_id
- * @param string $checkin_date
- * @param string $checkout_date
- * @param string $room_type
- * @param int $num_guests
- * @param int $price
- * @return int|bool
- */
-public function createHotelBooking($hotel_id, $checkin_date, $checkout_date, $room_type, $num_guests, $price) {
-    $stmt = $this->db->prepare("INSERT INTO `hotel_booking` (`hotel_id`, `checkin_date`, `checkout_date`, `room_type`, `num_guests`, `price`)
-     VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("isssii", $hotel_id, $checkin_date, $checkout_date, $room_type, $num_guests, $price);
-
-    if ($stmt->execute()) {
-        return $this->db->insert_id; // Return the ID of the inserted record
-    } else {
-        return false;
-    }
-}
 
 }

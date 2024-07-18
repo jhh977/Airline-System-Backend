@@ -17,14 +17,14 @@ class Taxi
         return $mysqli;
     }
 
-    public function createTaxi($licensePlate, $driverName, $driverPhoneNumber, $status)
-    {
-        $stmt = $this->db->prepare("INSERT INTO taxis (license_plate, driver_name, driver_phone_number, status) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssss", $licensePlate, $driverName, $driverPhoneNumber, $status);
-        return $stmt->execute();
-    }
 
-    public function getTaxiById($city)
+
+    /**
+         * get the taxi based on its location 
+         * @param int $city
+         * @return array|null
+    */
+    public function getTaxiByLocation($city)
     {
         $stmt = $this->db->prepare("
             SELECT * FROM taxis t
@@ -39,21 +39,7 @@ class Taxi
         while ($row = $result->fetch_assoc()) {
             $taxi[] = $row;
         }
-        
         return $taxi;
-    }
-    public function updateTaxi($id, $licensePlate, $driverName, $driverPhoneNumber, $status)
-    {
-        $stmt = $this->db->prepare("UPDATE taxis SET license_plate = ?, driver_name = ?, driver_phone_number = ?, status = ? WHERE id = ?");
-        $stmt->bind_param("ssssi", $licensePlate, $driverName, $driverPhoneNumber, $status, $id);
-        return $stmt->execute();
-    }
-
-    public function deleteTaxi($id)
-    {
-        $stmt = $this->db->prepare("DELETE FROM taxis WHERE id = ?");
-        $stmt->bind_param("i", $id);
-        return $stmt->execute();
     }
 
 /**
