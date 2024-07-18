@@ -94,6 +94,36 @@ class BookingController
         }
     }
 
+    public function handleCreateBooking() {
+        session_start();
+    
+        if (!isset($_SESSION['user_id'], $_SESSION['hotel_booking_id'], $_SESSION['taxi_booking_id'], $_SESSION['flight_booking_id'])) {
+            echo json_encode(['message' => 'Required session data is missing.']);
+            return;
+        }
+    
+        // Decode JSON input
+        $data = json_decode(file_get_contents('php://input'), true);
+        $flight_booking_id = $_SESSION['flight_booking_id'];
+        $user_id = $_SESSION['user_id'];
+        $hotel_booking_id = $_SESSION['hotel_booking_id'];
+        $taxi_booking_id = $_SESSION['taxi_booking_id'];
+        $booking_date = date("Y-m-d"); // Set booking date to today
+        $total_price = $_SESSION['$flight_booking_price']+$_SESSION['$taxi_booking_price']+$_SESSION['$hotel_booking_price'];
+        $status = 'pending'; // Initial status
+    
+        // Call the model method to create the booking
+        $insertedId = $this->bookingModel->createBooking($flight_booking_id, $user_id, $hotel_booking_id, $taxi_booking_id, $booking_date, $total_price, $status);
+    
+        // Check if the booking was successfully created
+        if (is_numeric($insertedId)) {
+            $_SESSION['booking_id'] = $insertedId;
+            echo json_encode(['message' => 'Booking created!', 'booking_id' => $insertedId]);
+        } else {
+            echo json_encode(['message' => 'Failed to create booking.']);
+        }
+    }
+
     public function getPendingBookingInformationByUserId()
     {
         
@@ -158,4 +188,6 @@ class BookingController
             echo json_encode(['message' => 'Failed to pay, try again']);
         }
     }
+
+    
 }

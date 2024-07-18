@@ -100,4 +100,26 @@ class Hotel
         $stmt->bind_param("i", $id);
         return $stmt->execute();
     }
+
+    /**
+ * @param int $hotel_id
+ * @param string $checkin_date
+ * @param string $checkout_date
+ * @param string $room_type
+ * @param int $num_guests
+ * @param int $price
+ * @return int|bool
+ */
+public function createHotelBooking($hotel_id, $checkin_date, $checkout_date, $room_type, $num_guests, $price) {
+    $stmt = $this->db->prepare("INSERT INTO `hotel_booking` (`hotel_id`, `checkin_date`, `checkout_date`, `room_type`, `num_guests`, `price`)
+     VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("isssii", $hotel_id, $checkin_date, $checkout_date, $room_type, $num_guests, $price);
+
+    if ($stmt->execute()) {
+        return $this->db->insert_id; // Return the ID of the inserted record
+    } else {
+        return false;
+    }
+}
+
 }

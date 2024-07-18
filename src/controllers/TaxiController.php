@@ -92,4 +92,22 @@ class TaxiController
             echo json_encode(['message' => 'Failed to delete taxi.']);
         }
     }
+
+    public function handleCreateTaxiBooking(){
+        $data = json_decode(file_get_contents('php://input'), true);
+        $taxi_id = $data['taxi_id'];
+        $pickup_location = $data['pickup_location'];
+        $dropoff_location = $data['dropoff_location'];
+        $pickup_time = $data['pickup_time'];
+        $dropoff_time = $data['dropoff_time'];
+        $price = $data['price'];
+        $insertedId = $this->taxiModel->createTaxiBooking($taxi_id, $pickup_location, $dropoff_location, $pickup_time, $dropoff_time, $price);
+        if (is_numeric($insertedId)) {
+            $_SESSION['taxi_booking_id'] = $insertedId;
+            $_SESSION['taxi_booking_price']= $price;
+            echo json_encode(['message' => 'Taxi booked!']);
+        } else {
+            echo json_encode(['message' => 'Failed to insert taxi booking.']);
+        }
+    }
 }

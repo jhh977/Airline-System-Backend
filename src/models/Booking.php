@@ -17,13 +17,6 @@ class Booking
         return $mysqli;
     }
 
-    public function createBooking($userId, $flightId, $hotelId, $taxiId, $status)
-    {
-        $stmt = $this->db->prepare("INSERT INTO bookings (user_id, flight_id, hotel_id, taxi_id, status) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("iiiss", $userId, $flightId, $hotelId, $taxiId, $status);
-        return $stmt->execute();
-    }
-
     public function getBookingById($id)
     {
         $stmt = $this->db->prepare("SELECT * FROM bookings WHERE id = ?");
@@ -114,4 +107,28 @@ class Booking
         $stmt->bind_param("isis", $booking_id, $payment_date, $total_price, $paymnt_method);
         return $stmt->execute();
      }
+
+     /**
+ * @param int $flight_id
+ * @param int $user_id
+ * @param int $hotel_booking_id
+ * @param int $taxi_booking_id
+ * @param string $booking_date
+ * @param int $total_price
+ * @param string $status
+ * @return int|bool
+ */
+public function createBooking($flight_id, $user_id, $hotel_booking_id, $taxi_booking_id, $booking_date, $total_price, $status) {
+    $stmt = $this->db->prepare("INSERT INTO `booking` (`flight_id`, `user_id`, `hotel_id`, `taxi_id`, `booking_date`, `total_price`, `status`)
+     VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("iiiiiss", $flight_id, $user_id, $hotel_booking_id, $taxi_booking_id, $booking_date, $total_price, $status);
+
+    // Execute the statement
+    if ($stmt->execute()) {
+        return $this->db->insert_id; // Return the ID of the inserted record
+    } else {
+        return false; // Handle the error case
+    }
+}
+
 }
