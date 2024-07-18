@@ -42,13 +42,8 @@ class Hotel
 
     /**
         * filters hotel based on location
-        * @param int $hotel_id
-        * @param string $checkin_date
-        * @param string $checkout_date
-        * @param string $room_type
-        * @param int $num_guests
-        * @param int $price
-        * @return int|bool
+        * @param int $city
+        * @return array|null
      */
     public function getHotelByLocation($city) {
         $stmt = $this->db->prepare("
