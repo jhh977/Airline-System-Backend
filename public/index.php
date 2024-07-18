@@ -16,13 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 require __DIR__ . '/../vendor/autoload.php';
 
 use Bramus\Router\Router;
-use App\Controllers\UserController;
-use App\Controllers\FlightController;
-use App\Controllers\HotelController;
-use App\Controllers\TaxiController;
-use App\Controllers\BookingController;
-use App\Controllers\PaymentController;
-use App\Controllers\AdminController;
+
 
 $router = new Router();
 
@@ -33,61 +27,29 @@ $router->get('/test', function() {
 
 // User routes
 $router->post('/api/register',  'App\Controllers\UserController@register'); 
-$router->post('/api/login', 'App\Controllers\UserController@login');
-$router->put('/api/profile', [UserController::class, 'updateProfile']);
-$router->delete('/api/profile', [UserController::class, 'deleteUser']);
+$router->post('/api/login', 'App\Controllers\UserController@login');;
 
 
 // Flight routes
-$router->post('/api/flights', [FlightController::class, 'createFlight']);
-$router->get('/api/flights', [FlightController::class, 'getAllFlights']);
-$router->get('/api/flights/{id}', [FlightController::class, 'getFlightById']);
-$router->put('/api/flights/{id}', [FlightController::class, 'updateFlight']);
-$router->delete('/api/flights/{id}', [FlightController::class, 'deleteFlight']);
+$router->post('/api/flight/booking',  'App\Controllers\FlightController@handleCreateFlightBooking'); 
 
 // Hotel routes
 $router->post('/api/hotels','App\Controllers\HotelController@getHotelByName');
-$router->get('/api/hotels', [HotelController::class, 'getAllHotels']);
-$router->get('/api/hotels/{id}', [HotelController::class, 'getHotelById']);
-$router->put('/api/hotels/{id}', [HotelController::class, 'updateHotel']);
-$router->delete('/api/hotels/{id}', [HotelController::class, 'deleteHotel']);
-
+$router->post('/api/hotel/booking',  'App\Controllers\HotelController@handleCreateHotelBooking'); 
 
 // Taxi routes
 $router->post('/api/taxis', 'App\Controllers\TaxiController@getTaxiByName');
 $router->get('/api/taxis', "App\Controllers\TaxiController@getTaxiByName");
-$router->get('/api/taxis/{id}', [TaxiController::class, 'getTaxiById']);
-$router->put('/api/taxis/{id}', [TaxiController::class, 'updateTaxi']); 
-$router->delete('/api/taxis/{id}', [TaxiController::class, 'deleteTaxi']);
+$router->post('/api/taxi/booking',  'App\Controllers\TaxiController@handleCreateTaxiBooking');
 
 // Booking routes
 $router->get('/api/bookings/details','App\Controllers\BookingController@getPendingBookingInformationByUserId');
 $router->post('/api/bookings/checkout','App\Controllers\BookingController@saveBookingInformationInPayment');
-$router->get('/api/bookings', [BookingController::class, 'getAllBookings']);
-$router->get('/api/bookings/{id}', [BookingController::class, 'getBookingById']);
-$router->put('/api/bookings/{id}', [BookingController::class, 'updateBooking']);
-$router->delete('/api/bookings/{id}', [BookingController::class, 'deleteBooking']);
+$router->post('/api/booking/create',  'App\Controllers\BookingController@handleCreateBooking'); 
 
-// Payment routes
-$router->post('/api/payments', [PaymentController::class, 'createPayment']);
-$router->get('/api/payments', [PaymentController::class, 'getAllPayments']);
-$router->get('/api/payments/{id}', [PaymentController::class, 'getPaymentById']);
-$router->put('/api/payments/{id}', [PaymentController::class, 'updatePayment']);
-$router->delete('/api/payments/{id}', [PaymentController::class, 'deletePayment']);
 
-// Admin routes
-$router->post('/api/admin/flights', [AdminController::class, 'createFlight']);
-$router->post('/api/admin/hotels', [AdminController::class, 'createHotel']);
-$router->post('/api/admin/taxis', [AdminController::class, 'createTaxi']);
-$router->post('/api/admin/bookings', [AdminController::class, 'createBooking']);
-$router->post('/api/admin/payments', [AdminController::class, 'createPayment']);
 
-// Trip planning route
-//$router->post('/api/trip-plan', [TripPlannerService::class, 'generateTripPlan']);
-
-//$router->post('/api/chat/response','App\Services\chatBotService@getBotResponse');
-//$router->post('/api/chat/history','App\Services\chatBotService@getChatHistory');
-//$router->post('/api/chat/response','App\Services\chatBotService@getBotResponse');
+//Chatbot routes
 $router->post('/api/chat/response','App\Services\ChatBotService@getBotResponse');
 $router->post('/api/chat/history','App\Services\ChatBotService@getChatHistory');
 // Handle requests
